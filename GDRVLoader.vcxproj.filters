@@ -43,5 +43,12 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="global.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GDRVLoader.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
 </Project>

@@ -30,7 +30,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -163,7 +163,14 @@
     <ClInclude Include="global.h" />
     <ClInclude Include="hde\hde64.h" />
     <ClInclude Include="hde\table64.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="utils\ntdll.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GDRVLoader.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

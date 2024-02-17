@@ -5,40 +5,42 @@ const wchar_t* DriverPath = L"C:\\Windows\\System32\\Drivers\\gdrv.sys";
 
 int wmain(int argc, wchar_t** argv)
 {
-    if (argc < 2) {
-        printf("Invalid arguments. Usage: GDRVLoader.exe TargetDriver.sys\n");
+    const wchar_t* target_driver;
+    const wchar_t* action;
+
+    if (argc < 3) {
         return false;
     }
 
     NTSTATUS Status = STATUS_UNSUCCESSFUL;
 
-    char input[10];
-    printf("Load or unload driver?\n");
-    scanf("%s", input);
+    action = argv[1];
+    target_driver = argv[2];
 
-    if (strcmp(input, "LOAD") == 0 || strcmp(input, "load") == 0)
+    if (wcscmp(action, L"LOAD") == 0 || wcscmp(action, L"load") == 0)
     {
         if (DropDriverFromBytes(DriverPath))
         {
-            // Load driver
-            Status = WindLoadDriver((PWCHAR)DriverPath, argv[1], FALSE);
+            Status = WindLoadDriver((PWCHAR)DriverPath, (PWCHAR)target_driver, FALSE);
 
-            if (NT_SUCCESS(Status))
-                printf("Driver loaded successfully\n");
+            if (!NT_SUCCESS(Status))
+                return false;
 
             DeleteFile((PWSTR)DriverPath);
         }
     }
-    else if (strcmp(input, "Unload") == 0 || strcmp(input, "unload") == 0)
+    else if (wcscmp(action, L"UNLOAD") == 0 || wcscmp(action, L"unload") == 0)
     {
-        // Unload driver
-        Status = WindUnloadDriver((PWCHAR)argv[1], 0);
-        if (NT_SUCCESS(Status))
-            printf("Driver unloaded successfully\n");
+        Status = WindUnloadDriver((PWCHAR)target_driver, 0);
+        if (!NT_SUCCESS(Status))
+            return false;
+    }
+    else {
+        return false;
     }
 
     if (!NT_SUCCESS(Status))
-        printf("Error: %08X\n", Status);
+        return false;
 
     return true;
 }
